@@ -1,15 +1,22 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import store from './store';
-import { ThemeProvider } from './context/ThemeContext';
+import { useTheme } from './context/ThemeContext';
 import TreeView from './components/Tree/TreeView';
+import './App.css'
+import ThemeToggle from './components/Theme/ThemeToggle';
 
 const App: React.FC = () => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <Provider store={store}>
-      <ThemeProvider>
-        <TreeView />
-      </ThemeProvider>
+      <div className={`app ${theme}`}>
+        <header>
+          <ThemeToggle />
+          <TreeView />
+        </header>
+      </div>
     </Provider>
   );
 };

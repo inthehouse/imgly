@@ -60,16 +60,23 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
         }
     };
 
+    // helper fucntion for highlighted children
+    const isPartOfHighlightedSubtree = (highlightedNode: any, node: any) => {
+        if (!highlightedNode) return false;
+        return node.leafid.startsWith(highlightedNode.leafid);
+    };
+
+    const isHighlighted = isPartOfHighlightedSubtree(highlightedNode, node);
 
     return (
         <li onDragOver={handleDragOver} onDrop={handleDrop}>
             <div
                 draggable
                 onDragStart={handleDragStart}
-                className={`treeNode ${highlightedNode === node ? 'highlighted' : ''}`}
+                className={`treeNode ${isHighlighted ? 'highlighted' : ''}`}
                 onClick={handleClick}
             >
-                <span style={{ cursor: 'pointer', fontWeight: highlightedNode === node ? 'bold' : 'normal' }}>
+                <span style={{ cursor: 'pointer', fontWeight: isHighlighted ? 'bold' : 'normal' }}>
                     {node.label}
                 </span>
                 {node.children && (
@@ -102,7 +109,5 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
         </li>
     );
 };
-
-
 
 export default TreeNodeComponent;
