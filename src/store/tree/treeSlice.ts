@@ -1,22 +1,22 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { TreeNode, TreeState } from '../../types/tree/TreeNode';
+import { fetchTreeData as fetchTreeDataAPI, fetchLeafData as fetchLeafDataAPI } from '../../services/api';
 
 const initialState: TreeState = {
     data: [],
-    selectedNode: null, // for now does nothing but will see 
+    selectedNode: null,
     fetchedData: null,
     fetchError: null,
 };
+
 export const fetchTreeData = createAsyncThunk<TreeNode[]>('tree/fetchTreeData', async () => {
-    const response = await axios.get('https://ubique.img.ly/frontend-tha/data.json');
-    return response.data;
+    return await fetchTreeDataAPI();
 });
 
 export const fetchLeafData = createAsyncThunk<any, string>('tree/fetchLeafData', async (id) => {
-    const response = await axios.get(`https://ubique.img.ly/frontend-tha/entries/${id}.json`);
-    return response.data;
+    return await fetchLeafDataAPI(id);
 });
+
 
 const treeSlice = createSlice({
     name: 'tree',

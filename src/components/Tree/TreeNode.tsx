@@ -1,17 +1,7 @@
 import React, { useState } from 'react';
 import './Tree.css';
 import { TreeNode as TreeNodeType } from '../../types/tree/TreeNode';
-
-interface TreeNodeProps {
-    node: TreeNodeType;
-    selectedNode: any;
-    highlightedNode: any;
-    onHighlightNode: (node: any) => void;
-    onLeafClick: (id: string) => void;
-    moveNode: (draggedNodeId: string, targetNodeId: string) => void;
-    draggedNodeId: string | null;
-    setDraggedNodeId: React.Dispatch<React.SetStateAction<string | null>>;
-}
+import { TreeNodeProps } from './TreeNode.types';
 
 const TreeNodeComponent: React.FC<TreeNodeProps> = ({
     node,
@@ -40,6 +30,7 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
 
     const handleDragStart = (e: React.DragEvent) => {
         console.log("Starting drag for node:", node.leafid); // debugging let it be for a while
+        e.stopPropagation();
         setDraggedNodeId(node.leafid!);
         e.dataTransfer.effectAllowed = 'move';
     };
@@ -52,7 +43,6 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
     const handleDrop = (e: React.DragEvent) => {
         e.preventDefault();
         e.stopPropagation();
-
         console.log("Dropped on node:", node.leafid); // debugging let it be for a while
         if (draggedNodeId) {
             moveNode(draggedNodeId, node.leafid || "");
@@ -60,9 +50,8 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
         }
     };
 
-    // helper fucntion for highlighted children
-    const isPartOfHighlightedSubtree = (highlightedNode: any, node: any) => {
-        if (!highlightedNode) return false;
+    const isPartOfHighlightedSubtree = (highlightedNode: TreeNodeType | null, node: TreeNodeType): boolean => {
+        if (!highlightedNode || !node.leafid || !highlightedNode.leafid) return false; 
         return node.leafid.startsWith(highlightedNode.leafid);
     };
 
