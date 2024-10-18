@@ -1,46 +1,47 @@
-# Getting Started with Create React App
+## Overview
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project implements a tree structure component using React, TypeScript, and Redux for state management. It allows for dynamic rendering of hierarchical data, providing features such as node expansion/collapse, node highlighting, and drag-and-drop functionality for node reordering. The architecture emphasizes a clean, modular design, leveraging reusable components for scalability and maintainability.<br>
 
-## Available Scripts
+The leaf(s) can be clicked on for further data. Any leaf that does not have any data will give an error. <br>
 
-In the project directory, you can run:
+To run the project, use the following commands:
 
-### `npm start`
+```bash
+npm install
+```
+```bash
+npm start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Features
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Hierarchical Tree Structure**: Visualizes nested data in a tree format.<br>
+- **Node Expansion/Collapse**: Allows users to expand or collapse nodes to view or hide children.<br>
+- **Node Highlighting**: Enables users to highlight selected nodes for easier navigation.<br>
+- **Drag-and-Drop Support**: Facilitates reordering of tree nodes through drag-and-drop interaction.<br>
+- **Theming Support**: Uses Context API to manage global theme state.<br>
 
-### `npm test`
+## Architecture and Design Decisions
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Component-Based Architecture
 
-### `npm run build`
+- **Reusable Components**: The project follows a component-based architecture, allowing for the creation of independent, reusable components. This approach enhances code maintainability and makes it easier to develop and test individual parts of the application.<br>
+- **Separation of Concerns**: Each component is responsible for a specific part of the application, leading to cleaner and more organized code. This separation makes it simpler to manage state and behavior in complex applications compared to a traditional MVC (Model-View-Controller) architecture.<br>
+- **Scalability**: As the application grows, adding new features becomes straightforward with a component-based approach. New components can be created or existing ones modified without affecting the overall application structure, making it easier to scale the application over time.<br>
+- **Enhanced Collaboration**: A component-based architecture allows for better collaboration among team members, as developers can work on different components independently. This leads to faster development cycles and a more efficient workflow.<br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### State Management
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Redux for State Management**: The project utilizes Redux to manage global state, including highlighted nodes and the currently selected node. This ensures a consistent state across the application and facilitates easier debugging and maintenance.<br>
+- **Context for Theming**: The Context API is used to manage the theme state globally. This allows for easy toggling of themes (e.g., light and dark mode) throughout the application without prop drilling.<br>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Testing
 
-### `npm run eject`
+The project includes basic tests designed to ensure the functionality of the Redux store and the `TreeView` component. The tests cover only basic aspects and while the tests are foundational, they serve as a starting point for further expansion to ensure the robustness of the application.<br>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Running Tests
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To run the tests, use the following command:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm test
