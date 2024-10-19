@@ -7,7 +7,7 @@ import './App.css'
 import ThemeToggle from './components/Theme/ThemeToggle';
 
 const App: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <Provider store={store}>
