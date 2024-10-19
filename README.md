@@ -1,46 +1,68 @@
-# Getting Started with Create React App
+## Overview
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project implements a tree structure component using React, TypeScript, and Redux for state management. It allows for dynamic rendering of hierarchical data, providing features such as node expansion/collapse, node highlighting, and drag-and-drop functionality for node reordering. The architecture emphasizes a clean, modular design, leveraging reusable components for scalability and maintainability.
 
-## Available Scripts
+The leaf(s) can be clicked on for further data. Any leaf that does not have any data will give an error.
 
-In the project directory, you can run:
+To run the project, use the following commands:
 
-### `npm start`
+```bash
+yarn install
+```
+```bash
+yarn start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Features
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Hierarchical Tree Structure**: Visualizes nested data in a tree format.
+- **Node Expansion/Collapse**: Allows users to expand or collapse nodes to view or hide children.
+- **Node Highlighting**: Enables users to highlight selected nodes for easier navigation.
+- **Drag-and-Drop Support**: Facilitates reordering of tree nodes through drag-and-drop interaction.
+- **Theming Support**: Uses Context API to manage global theme state.
+- **Accessibility Considerations**: Ensures the application is usable for all users by incorporating accessibility features such as ARIA labels, keyboard navigation, and visual indicators for focus.
 
-### `npm test`
+## Accessibility
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This project was designed with accessibility in mind, ensuring that all users, including those with disabilities, can effectively navigate and interact with the application.
 
-### `npm run build`
+- **ARIA Attributes**: We have included ARIA attributes like `aria-expanded` for the expand/collapse buttons to make the tree structure accessible to screen readers.
+- **Keyboard Navigation**: The tree structure supports keyboard interaction, allowing users to navigate through nodes using the Tab, Enter, and Space keys, making it accessible without the need for a mouse.
+- **Focus Management**: Visual indicators are provided to highlight focused elements, ensuring that users relying on keyboard navigation can easily track which element is currently focused.
+- **Accessible Labels**: Buttons and interactive elements have been provided with descriptive labels (e.g., "Expand" and "Collapse") to ensure that screen readers can convey their functionality accurately to users.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+These considerations improve the overall accessibility and usability of the project, aligning with best practices for web development to ensure a more inclusive experience.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Architecture and Design Decisions
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Component-Based Architecture
 
-### `npm run eject`
+- **Reusable Components**: The project follows a component-based architecture, allowing for the creation of independent, reusable components. This approach enhances code maintainability and makes it easier to develop and test individual parts of the application.
+- **Separation of Concerns**: Each component is responsible for a specific part of the application, leading to cleaner and more organized code. This separation makes it simpler to manage state and behavior in complex applications compared to a traditional MVC (Model-View-Controller) architecture.
+- **Scalability**: As the application grows, adding new features becomes straightforward with a component-based approach. New components can be created or existing ones modified without affecting the overall application structure, making it easier to scale the application over time.
+- **Enhanced Collaboration**: A component-based architecture allows for better collaboration among team members, as developers can work on different components independently. This leads to faster development cycles and a more efficient workflow.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### State Management
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Redux for State Management**: The project utilizes Redux to manage global state, including highlighted nodes and the currently selected node. This ensures a consistent state across the application and facilitates easier debugging and maintenance.
+- **Context for Theming**: The Context API is used to manage the theme state globally. This allows for easy toggling of themes (e.g., light and dark mode) throughout the application without prop drilling.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Scope and Limitations
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+This project represents the core functionality of a tree structure component, and certain features have been left out to keep the assignment focused and concise.
 
-## Learn More
+- **No Pages or Routing**: Since the assignment focuses on the tree structure component, pages, routing, and other aspects like navigation have not been implemented. Given the scope, these features were not essential at this stage.
+- **Basic Design**: The UI is kept simple for the purpose of this assignment, focusing on the tree structure. Future enhancements could include more sophisticated UI elements, responsive design, and more advanced theming options.
+- **Further Testing Needed**: While basic tests are included, comprehensive unit and integration testing are recommended for production-ready code.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Testing
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The project includes basic tests designed to ensure the functionality of the Redux store, the `TreeView`, and the `Toggle` component. The tests cover only basic aspects and serve as a starting point for further expansion to ensure the robustness of the application.
+
+### Running Tests
+
+To run the tests, use the following command:
+
+```bash
+yarn test
+```
