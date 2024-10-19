@@ -16,9 +16,9 @@ const Toggle: React.FC = () => {
                 />
                 <span className="slider" />
             </label>
-            <label data-testid="theme-label" className='toggle-label'>
+            <span data-testid="theme-label" className='toggle-label'>
                 {theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
-            </label>
+            </span>
         </div>
     );
 };

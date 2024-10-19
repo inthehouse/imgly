@@ -3,7 +3,7 @@ import './Tree.css';
 import { TreeNode as TreeNodeType } from '../../types/tree/TreeNode';
 import { TreeNodeProps } from './TreeNode.types';
 
-const TreeNodeComponent: React.FC<TreeNodeProps> = ({
+const TreeNodeComponent: React.FC<TreeNodeProps> = React.memo(({
     node,
     selectedNode,
     highlightedNode,
@@ -17,7 +17,7 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
 
     const toggleExpand = (e: React.MouseEvent | React.KeyboardEvent) => {
         e.stopPropagation();
-        setIsExpanded(!isExpanded);
+        setIsExpanded(prev => !prev);
     };
 
     const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
@@ -25,7 +25,7 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
         if (!node.children || node.children.length === 0) {
             onLeafClick(node.id!);
         }
-        onHighlightNode(selectedNode && selectedNode.leafid === node.leafid ? null : node);
+        onHighlightNode(selectedNode?.leafid === node.leafid ? null : node);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -60,7 +60,6 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
     };
 
     const isHighlighted = isPartOfHighlightedSubtree(highlightedNode, node);
-
     return (
         <li
             role="treeitem"
@@ -78,6 +77,7 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
                 onClick={handleClick}
                 role="button"
                 tabIndex={-1}
+                aria-label={node.label}
             >
                 <span style={{ cursor: 'pointer', fontWeight: isHighlighted ? 'bold' : 'normal' }}>
                     {node.label}
@@ -112,6 +112,6 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
             )}
         </li>
     );
-};
+});
 
 export default TreeNodeComponent;

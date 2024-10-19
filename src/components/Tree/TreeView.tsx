@@ -21,7 +21,7 @@ const TreeView: React.FC = () => {
         <div className="treeView">
             <h1>Tree Structure</h1>
             <ul role="tree" aria-label="Tree Structure">
-                {treeData.map((node: any) => (
+                {treeData.map((node) => (
                     <TreeNode
                         key={node.leafid}
                         node={node}

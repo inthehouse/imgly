@@ -16,22 +16,24 @@ const useTree = () => {
     const [draggedNodeId, setDraggedNodeId] = useState<string | null>(null);
 
     useEffect(() => {
-        dispatch(fetchTreeData());
+        dispatch(fetchTreeData()).catch(error => {
+            console.error("Error fetching tree data:", error);
+        });
     }, [dispatch]);
 
     const handleHighlightNode = (node: TreeNode | null) => {
         setHighlightedNode(node);
-        setSelectedNode(node); 
+        setSelectedNode(node);
     };
 
     const handleLeafClick = (id: string) => {
-        dispatch(fetchLeafData(id));
+        dispatch(fetchLeafData(id)).catch(error => {
+            console.error("Error fetching leaf data:", error);
+        });
     };
 
     const moveNode = (draggedNodeId: string, targetNodeId: string) => {
-        const updatedTree = moveNodeHelper(treeData, draggedNodeId, targetNodeId);
-        console.log('Updated Tree Structure:', updatedTree); // debugging
-        return updatedTree;
+        moveNodeHelper(treeData, draggedNodeId, targetNodeId);
     };
 
     return {
