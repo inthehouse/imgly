@@ -4,7 +4,7 @@ import store from './store';
 import { useTheme } from './context/ThemeContext';
 import TreeView from './components/Tree/TreeView';
 import './App.css'
-import ThemeToggle from './components/Theme/ThemeToggle';
+import Toggle from './components/ThemeToggle/Toggle';
 
 const App: React.FC = () => {
   const { theme } = useTheme();
@@ -13,7 +13,7 @@ const App: React.FC = () => {
     <Provider store={store}>
       <div className={`app ${theme}`}>
         <header>
-          <ThemeToggle />
+          <Toggle />
           <TreeView />
         </header>
       </div>

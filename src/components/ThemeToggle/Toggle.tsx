@@ -2,7 +2,7 @@ import React from 'react';
 import './Toggle.css';
 import { useTheme } from '../../context/ThemeContext';
 
-const ThemeToggle: React.FC = () => {
+const Toggle: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
 
     return (
@@ -12,15 +12,15 @@ const ThemeToggle: React.FC = () => {
                     type="checkbox"
                     checked={theme === 'dark'}
                     onChange={toggleTheme}
+                    aria-label="Toggle theme"
                 />
                 <span className="slider" />
             </label>
             <label data-testid="theme-label" className='toggle-label'>
-                {theme === 'dark' ? 'Light Theme' : 'Dark Theme'}
+                {theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
             </label>
         </div>
-
     );
 };
 
-export default ThemeToggle;
+export default Toggle;

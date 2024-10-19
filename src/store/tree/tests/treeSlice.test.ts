@@ -1,5 +1,5 @@
-import treeReducer from './treeSlice';
-import { TreeState } from '../../types/tree/TreeNode';
+import treeReducer from '../treeSlice';
+import { TreeState } from '../../../types/tree/TreeNode';
 
 describe('treeSlice', () => {
     const initialState: TreeState = {

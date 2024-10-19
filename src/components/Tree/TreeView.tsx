@@ -20,7 +20,7 @@ const TreeView: React.FC = () => {
     return (
         <div className="treeView">
             <h1>Tree Structure</h1>
-            <ul>
+            <ul role="tree" aria-label="Tree Structure">
                 {treeData.map((node: any) => (
                     <TreeNode
                         key={node.leafid}
@@ -36,7 +36,7 @@ const TreeView: React.FC = () => {
                 ))}
             </ul>
             {selectedNode && (
-                <div className="details">
+                <div className="details" aria-live="polite">
                     {fetchError && <p className="error">{fetchError}</p>}
                     {fetchedData && <pre>{JSON.stringify(fetchedData, null, 2)}</pre>}
                 </div>

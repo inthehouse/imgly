@@ -15,12 +15,12 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
 }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
-    const toggleExpand = (e: React.MouseEvent) => {
+    const toggleExpand = (e: React.MouseEvent | React.KeyboardEvent) => {
         e.stopPropagation();
         setIsExpanded(!isExpanded);
     };
 
-    const handleClick = (e: React.MouseEvent) => {
+    const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
         e.stopPropagation();
         if (!node.children || node.children.length === 0) {
             onLeafClick(node.id!);
@@ -28,8 +28,13 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
         onHighlightNode(selectedNode && selectedNode.leafid === node.leafid ? null : node);
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            handleClick(e);
+        }
+    };
+
     const handleDragStart = (e: React.DragEvent) => {
-        console.log("Starting drag for node:", node.leafid); // debugging let it be for a while
         e.stopPropagation();
         setDraggedNodeId(node.leafid!);
         e.dataTransfer.effectAllowed = 'move';
@@ -43,7 +48,6 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
     const handleDrop = (e: React.DragEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log("Dropped on node:", node.leafid); // debugging let it be for a while
         if (draggedNodeId) {
             moveNode(draggedNodeId, node.leafid || "");
             setDraggedNodeId(null);
@@ -51,19 +55,29 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
     };
 
     const isPartOfHighlightedSubtree = (highlightedNode: TreeNodeType | null, node: TreeNodeType): boolean => {
-        if (!highlightedNode || !node.leafid || !highlightedNode.leafid) return false; 
+        if (!highlightedNode || !node.leafid || !highlightedNode.leafid) return false;
         return node.leafid.startsWith(highlightedNode.leafid);
     };
 
     const isHighlighted = isPartOfHighlightedSubtree(highlightedNode, node);
 
     return (
-        <li onDragOver={handleDragOver} onDrop={handleDrop}>
+        <li
+            role="treeitem"
+            aria-expanded={isExpanded}
+            aria-selected={isHighlighted}
+            draggable
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
+        >
             <div
-                draggable
-                onDragStart={handleDragStart}
                 className={`treeNode ${isHighlighted ? 'highlighted' : ''}`}
                 onClick={handleClick}
+                role="button"
+                tabIndex={-1}
             >
                 <span style={{ cursor: 'pointer', fontWeight: isHighlighted ? 'bold' : 'normal' }}>
                     {node.label}
@@ -72,6 +86,7 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
                     <button
                         className="toggle-button"
                         onClick={toggleExpand}
+                        onKeyDown={handleKeyDown}
                         aria-label={isExpanded ? 'Collapse' : 'Expand'}
                     >
                         {isExpanded ? '-' : '+'}
@@ -79,7 +94,7 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
                 )}
             </div>
             {isExpanded && node.children && (
-                <ul>
+                <ul role="group">
                     {node.children.map((child: TreeNodeType) => (
                         <TreeNodeComponent
                             key={child.leafid}
