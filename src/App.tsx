@@ -13,7 +13,7 @@ const App: React.FC = () => {
     <Provider store={store}>
       <div className={`app ${theme}`}>
         <header>
-          {/* otherwise this would have been in a Header component */}
+          {/* otherwise this would have been in a Header component with proper pages and routing. but we will have to do for now */}
           <Toggle />
         </header>
         <TreeView />
