@@ -13,9 +13,10 @@ const App: React.FC = () => {
     <Provider store={store}>
       <div className={`app ${theme}`}>
         <header>
+          {/* otherwise this would have been in a Header component */}
           <Toggle />
-          <TreeView />
         </header>
+        <TreeView />
       </div>
     </Provider>
   );
