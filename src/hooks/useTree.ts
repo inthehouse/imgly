@@ -33,7 +33,9 @@ const useTree = () => {
     };
 
     const moveNode = (draggedNodeId: string, targetNodeId: string) => {
-        moveNodeHelper(treeData, draggedNodeId, targetNodeId);
+        const updatedTree = moveNodeHelper(treeData, draggedNodeId, targetNodeId);
+        console.log('Updated Tree Structure:', updatedTree); // debugging
+        return updatedTree;
     };
 
     return {
