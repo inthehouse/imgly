@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import './Tree.css';
+import { useDispatch, useSelector } from 'react-redux';
 import { TreeNode as TreeNodeType } from '../../types/tree/TreeNode';
 import { TreeNodeProps } from './TreeNode.types';
+import { selectNode } from '../../store/tree/treeSlice';
+import { RootState } from '../../store';
 
-const TreeNodeComponent: React.FC<TreeNodeProps> = React.memo(({
+const TreeNodeComponent: React.FC<TreeNodeProps> = ({
     node,
-    selectedNode,
     highlightedNode,
     onHighlightNode,
     onLeafClick,
@@ -14,6 +16,8 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = React.memo(({
     setDraggedNodeId
 }) => {
     const [isExpanded, setIsExpanded] = useState(false);
+    const dispatch = useDispatch();
+    const selectedNode = useSelector((state: RootState) => state.tree.selectedNode);
 
     const toggleExpand = (e: React.MouseEvent | React.KeyboardEvent) => {
         e.stopPropagation();
@@ -25,16 +29,31 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = React.memo(({
         if (!node.children || node.children.length === 0) {
             onLeafClick(node.id!);
         }
+        dispatch(selectNode(node));
         onHighlightNode(selectedNode?.leafid === node.leafid ? null : node);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            handleClick(e);
+        switch (e.key) {
+            case 'ArrowRight':
+                e.preventDefault();
+                setIsExpanded(true);
+                break;
+            case 'ArrowLeft':
+                e.preventDefault();
+                setIsExpanded(false);
+                break;
+            case 'Enter':
+            case ' ':
+                handleClick(e);
+                break;
+            default:
+                break;
         }
     };
 
     const handleDragStart = (e: React.DragEvent) => {
+        console.log("Starting drag for node:", node.leafid); // debugging
         e.stopPropagation();
         setDraggedNodeId(node.leafid!);
         e.dataTransfer.effectAllowed = 'move';
@@ -49,19 +68,20 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = React.memo(({
         e.preventDefault();
         e.stopPropagation();
         if (draggedNodeId) {
-            moveNode(draggedNodeId, node.leafid || "");
+            moveNode(draggedNodeId, node.leafid || '');
             setDraggedNodeId(null);
         }
+        console.log("Dropped on node:", node.leafid); // debugging 
     };
 
-    const isPartOfHighlightedSubtree = (highlightedNode: TreeNodeType | null, node: TreeNodeType): boolean => {
+    const isHighlighted = useMemo(() => {
         if (!highlightedNode || !node.leafid || !highlightedNode.leafid) return false;
         return node.leafid.startsWith(highlightedNode.leafid);
-    };
+    }, [highlightedNode, node.leafid]);
 
-    const isHighlighted = isPartOfHighlightedSubtree(highlightedNode, node);
     return (
         <li
+            key={node.leafid}
             role="treeitem"
             aria-expanded={isExpanded}
             aria-selected={isHighlighted}
@@ -86,7 +106,6 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = React.memo(({
                     <button
                         className="toggle-button"
                         onClick={toggleExpand}
-                        onKeyDown={handleKeyDown}
                         aria-label={isExpanded ? 'Collapse' : 'Expand'}
                     >
                         {isExpanded ? '-' : '+'}
@@ -95,23 +114,25 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = React.memo(({
             </div>
             {isExpanded && node.children && (
                 <ul role="group">
-                    {node.children.map((child: TreeNodeType) => (
-                        <TreeNodeComponent
-                            key={child.leafid}
-                            node={child}
-                            selectedNode={selectedNode}
-                            highlightedNode={highlightedNode}
-                            onHighlightNode={onHighlightNode}
-                            onLeafClick={onLeafClick}
-                            moveNode={moveNode}
-                            draggedNodeId={draggedNodeId}
-                            setDraggedNodeId={setDraggedNodeId}
-                        />
-                    ))}
+                    <ul role="group">
+                        {node.children.map((child: TreeNodeType) => (
+                            <TreeNodeComponent
+                                key={child.leafid}
+                                node={child}
+                                selectedNode={selectedNode}
+                                highlightedNode={highlightedNode}
+                                onHighlightNode={onHighlightNode}
+                                onLeafClick={onLeafClick}
+                                moveNode={moveNode}
+                                draggedNodeId={draggedNodeId}
+                                setDraggedNodeId={setDraggedNodeId}
+                            />
+                        ))}
+                    </ul>
                 </ul>
             )}
         </li>
     );
-});
+};
 
-export default TreeNodeComponent;
+export default React.memo(TreeNodeComponent);
