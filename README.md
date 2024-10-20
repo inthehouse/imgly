@@ -7,7 +7,7 @@ The leaf(s) can be clicked on for further data. Any leaf that does not have any 
 To run the project, use the following commands:
 
 ```bash
-yarn install
+yarn build
 ```
 ```bash
 yarn start
@@ -45,7 +45,9 @@ These considerations improve the overall accessibility and usability of the proj
 ### State Management
 
 - **Redux for State Management**: The project utilizes Redux to manage global state, including highlighted nodes and the currently selected node. This ensures a consistent state across the application and facilitates easier debugging and maintenance.
-- **Context for Theming**: The Context API is used to manage the theme state globally. This allows for easy toggling of themes (e.g., light and dark mode) throughout the application without prop drilling.
+- **Context for Theming**: The Context API is used to manage the global theme state, allowing for easy toggling between themes (e.g., light and dark modes) across the application without passing props through multiple components. Choosing Context for theme management is solely a personal preference based on the following reasons:
+  - It demonstrates experience with using Context for state management.
+  - Context is ideal for handling smaller, less frequently changing data (like theme or language preferences). This keeps things organized without the complexity of Redux. For more dynamic, data-driven parts of the application, I prefer Redux, while using Context for simpler features like theme or language management feels more appropriate to me.
 
 ## Scope and Limitations
 
