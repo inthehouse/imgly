@@ -2,6 +2,11 @@ import React from 'react';
 import './Toggle.css';
 import { useTheme } from '../../context/ThemeContext';
 
+const THEMES = {
+    DARK: 'dark',
+    LIGHT: 'light',
+};
+
 const Toggle: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
 
@@ -10,14 +15,14 @@ const Toggle: React.FC = () => {
             <label data-testid="theme-toggle" className="theme-switch">
                 <input
                     type="checkbox"
-                    checked={theme === 'dark'}
+                    checked={theme === THEMES.DARK}
                     onChange={toggleTheme}
                     aria-label="Toggle theme"
                 />
                 <span className="slider" />
             </label>
             <span data-testid="theme-label" className='toggle-label'>
-                {theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
+                {theme === THEMES.DARK ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
             </span>
         </div>
     );
