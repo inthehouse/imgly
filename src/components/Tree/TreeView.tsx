@@ -3,6 +3,11 @@ import TreeNode from './TreeNode';
 import useTree from '../../hooks/useTree';
 import './Tree.css';
 
+// what displays the whole tree
+// the TreeNode is a component that checks which kind of node is supposed to be displayed.
+// this could be a container if you will just to keep things seperated and clean.
+
+
 const TreeView: React.FC = () => {
     const {
         treeData,

@@ -2,6 +2,8 @@ import React from 'react';
 import './Toggle.css';
 import { useTheme } from '../../context/ThemeContext';
 
+// this file is for the toggle for theme. is pretty basic
+
 const THEMES = {
     DARK: 'dark',
     LIGHT: 'light',
