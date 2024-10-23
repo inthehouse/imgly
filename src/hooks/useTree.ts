@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
-import { fetchTreeData, fetchLeafData } from '../store/tree/treeSlice';
+import { fetchTreeData, fetchLeafData, updateNode } from '../store/tree/treeSlice';
 import { moveNode as moveNodeHelper } from '../utils/treeHelpers';
 import { TreeNode } from '../types/tree/TreeNode';
 
@@ -22,8 +22,15 @@ const useTree = () => {
     }, [dispatch]);
 
     const handleHighlightNode = (node: TreeNode | null) => {
-        setHighlightedNode(node);
-        setSelectedNode(node);
+        if (highlightedNode && highlightedNode.leafid === node?.leafid) {
+            setHighlightedNode(null)
+        }
+        else {
+            setHighlightedNode(node)
+            setSelectedNode(node);
+        }
+        // setHighlightedNode(node);
+        // setSelectedNode(node);
     };
 
     const handleLeafClick = (id: string) => {
@@ -35,7 +42,7 @@ const useTree = () => {
     const moveNode = (draggedNodeId: string, targetNodeId: string) => {
         const updatedTree = moveNodeHelper(treeData, draggedNodeId, targetNodeId);
         console.log('Updated Tree Structure:', updatedTree); // debugging
-        return updatedTree;
+        dispatch(updateNode(updatedTree));
     };
 
     return {

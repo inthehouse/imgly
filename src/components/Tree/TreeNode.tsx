@@ -30,7 +30,7 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
             onLeafClick(node.id!);
         }
         dispatch(selectNode(node));
-        onHighlightNode(selectedNode?.leafid === node.leafid ? null : node);
+        onHighlightNode(node);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -92,6 +92,7 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
             onKeyDown={handleKeyDown}
             tabIndex={0}
         >
+            
             <div
                 className={`treeNode ${isHighlighted ? 'highlighted' : ''}`}
                 onClick={handleClick}

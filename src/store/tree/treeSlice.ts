@@ -28,6 +28,9 @@ const treeSlice = createSlice({
         selectNode: (state, action: PayloadAction<TreeNode>) => {
             state.selectedNode = action.payload;
         },
+        updateNode: (state, action: PayloadAction<TreeNode[]>) => {
+            state.data = action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -61,6 +64,6 @@ const generateTreeWithIds = (nodes: TreeNode[], parentId: string = ''): TreeNode
     });
 };
 
-export const { setTreeData, selectNode } = treeSlice.actions;
+export const { setTreeData, selectNode, updateNode } = treeSlice.actions;
 
 export default treeSlice.reducer;
