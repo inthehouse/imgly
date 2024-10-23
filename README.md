@@ -13,6 +13,23 @@ yarn build
 yarn start
 ```
 
+
+## The Task:
+
+Please solve the following tasks with this kind of data format. Of course, your solution should work with any data in the same format.
+
+- **Fetch and display the data**. 
+Your first task is to fetch the data from [`https://ubique.img.ly/frontend-tha/data.json`](https://ubique.img.ly/frontend-tha/data.json) and display it as a tree structure in your web app.
+- **Interact with the data**.
+Add interaction to the tree. If any node in the tree is clicked, highlight it and all its descendants, i.e. the complete sub-tree for this node. A second click on the same node removes the highlight.
+- **Fetch additional data.**
+If the user clicks on a leaf, fetch data from [`https://ubique.img.ly/frontend-tha/entries/${id}.json`](https://ubique.img.ly/frontend-tha/entries/${id}.json) (where `${id}` is the id of an entry). Display the data besides the tree. Beware that some data might not exist (404 status code).
+- **Change the tree structure**
+Add a UI that allows moving any node with all its descendants (its sub-tree) to another position in the tree. Print the new JSON data structure to the console.
+- **Add theming**
+Add a toggle between a light and a dark theme.
+
+
 ## Features
 
 - **Hierarchical Tree Structure**: Visualizes nested data in a tree format.
